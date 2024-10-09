@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.openaudible.OpenAudible</id>
+  <metadata_license>MIT</metadata_license>
+  <name>OpenAudible</name>
+  <summary>OpenAudible Audiobook Manager</summary>
+  <description>
+    <p>OpenAudible is an easy to use audiobook manager that catalogs and organizes your audiobooks. It can automatically download and backup your Audible books.</p>
+    <p><em>Features</em></p>
+    <ul>
+      <li>Automatically connect, download and convert all your Audible book purchases</li>
+      <li>Supports conversion to M4B, MP3, M4A audio formats</li>
+      <li>Export your book lists to html, json, spreadsheet, or cover art poster</li>
+      <li>Supports importing additional titles into your library</li>
+      <li>Split and join books by chapter</li>
+      <li>Built-in audiobook player</li>
+      <li>Supports all Audible regions</li>
+      <li>Automation features make it easy to update your library after buying books</li>
+      <li>Quick links to access author, series, and narrator pages</li>
+      <li>Internationalization (English, French, German, Spanish, Arabic, Russian, Hindi, etc.)</li>
+    </ul>
+    <p>OpenAudible loves, but is unaffiliated with audible.com.</p>
+  </description>
+  <launchable type="desktop-id">org.openaudible.OpenAudible.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <caption>OpenAudible Desktop</caption>
+      <image>https://openaudible.org/images/screenshot_linux.png</image>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">https://openaudible.org</url>
+  <url type="help">https://openaudible.org/docs</url>
+  <url type="bugtracker">https://github.com/openaudible/openaudible/issues</url>
+  <provides>
+    <binary>OpenAudible</binary>
+  </provides>
+  <releases>
+    <release version="VERSION" date="YYYY-MM-DD"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

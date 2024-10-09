@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=OpenAudible
+Exec=OpenAudible
+Icon=org.openaudible.OpenAudible
+Type=Application
+Categories=Audio;AudioVideo;FileManager;

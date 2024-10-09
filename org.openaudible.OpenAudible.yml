@@ -1,0 +1,48 @@
+app-id: org.openaudible.OpenAudible
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: OpenAudible
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri
+  - --filesystem=home
+  - --talk-name=org.freedesktop.Notifications
+  - --env=JAVA_HOME=/app/jre
+  - --env=PATH=/app/bin:/app/jre/bin:/usr/bin
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/pkgconfig
+  - /share/aclocal
+  - /man
+  - /share/man
+  - '*.la'
+  - '*.a'
+modules:
+  - name: openaudible
+    only-arches:
+      - x86_64
+    buildsystem: simple
+    build-commands:
+      - cp -r ./opt/OpenAudible/* /app/
+      - find /app
+      - install -Dm755 /app/OpenAudible /app/bin/OpenAudible
+      - mkdir -p /app/share/applications
+      - cp org.openaudible.OpenAudible.desktop /app/share/applications/
+      - mkdir -p /app/share/icons/hicolor/512x512/apps
+      - cp org.openaudible.OpenAudible.png /app/share/icons/hicolor/512x512/apps/
+      - mkdir -p /app/share/metainfo
+      - cp org.openaudible.OpenAudible.appdata.xml /app/share/metainfo/
+    sources:
+      - type: dir
+        path: openaudible_extracted
+      - type: file
+        path: org.openaudible.OpenAudible.desktop
+      - type: file
+        path: org.openaudible.OpenAudible.png
+      - type: file
+        path: org.openaudible.OpenAudible.appdata.xml
