@@ -1,18 +1,16 @@
 app-id: org.openaudible.OpenAudible
-runtime: org.freedesktop.Platform
-runtime-version: '23.08'
-sdk: org.freedesktop.Sdk
+runtime: org.gnome.Platform
+runtime-version: '47'
+sdk: org.gnome.Sdk
 command: OpenAudible
 finish-args:
   - --share=network
   - --share=ipc
   - --socket=fallback-x11
   - --socket=wayland
+  - --socket=pulseaudio
   - --device=dri
-  - --filesystem=home
   - --talk-name=org.freedesktop.Notifications
-  - --env=JAVA_HOME=/app/jre
-  - --env=PATH=/app/bin:/app/jre/bin:/usr/bin
 cleanup:
   - /include
   - /lib/pkgconfig
@@ -28,9 +26,11 @@ modules:
       - x86_64
     buildsystem: simple
     build-commands:
-      - cp -r ./opt/OpenAudible/* /app/
-      - find /app
-      - install -Dm755 /app/OpenAudible /app/bin/OpenAudible
+      - ar x OpenAudible.deb
+      - tar -xf data.tar.gz
+      - mv ./opt/OpenAudible -t /app
+      - mkdir -p /app/bin
+      - ln -s /app/OpenAudible/OpenAudible /app/bin/OpenAudible
       - mkdir -p /app/share/applications
       - cp org.openaudible.OpenAudible.desktop /app/share/applications/
       - mkdir -p /app/share/icons/hicolor/512x512/apps
@@ -38,8 +38,10 @@ modules:
       - mkdir -p /app/share/metainfo
       - cp org.openaudible.OpenAudible.appdata.xml /app/share/metainfo/
     sources:
-      - type: dir
-        path: openaudible_extracted
+      - type: file
+        url: "https://github.com/openaudible/openaudible/releases/download/v4.4.7/OpenAudible_4.4.7_x86_64.deb"
+        sha256: 4ceac24480b10f8fc0294f4402ab98d44b3c927840205aaacd92e5b6d9a35fea
+        dest-filename: OpenAudible.deb
       - type: file
         path: org.openaudible.OpenAudible.desktop
       - type: file
