@@ -49,11 +49,14 @@ flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flath
 # Install required runtime
 flatpak install -y flathub org.gnome.{Platform,Sdk}//47
 
+# Install flatpak builder
+flatpak install -y flathub org.flatpak.Builder
+
 ## Initialize build directory
 #flatpak build-init  "$BUILD_DIR" org.openaudible.OpenAudible org.freedesktop.Sdk org.freedesktop.Platform 24.08
 
 # Build Flatpak
-flatpak-builder  --force-clean --disable-rofiles-fuse --repo=repo "$BUILD_DIR" org.openaudible.OpenAudible.yml
+flatpak run org.flatpak.Builder  --force-clean --disable-rofiles-fuse --repo=repo "$BUILD_DIR" org.openaudible.OpenAudible.yml
 
 # Create Flatpak bundle
 flatpak build-bundle  repo OpenAudible-$VERSION.flatpak org.openaudible.OpenAudible
