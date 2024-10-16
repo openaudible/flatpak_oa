@@ -1,0 +1,7 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+cd ..
+
+
+# run OpenAudible from command line. -ea enables "asserts" and can help find bugs..
+./jre/bin/java -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -jar openaudible*.jar "$@"

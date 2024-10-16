@@ -17,7 +17,7 @@ fi
 
 
 # Create build directory
-BUILD_DIR="build_flatpak"
+BUILD_DIR="build"
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
@@ -28,6 +28,7 @@ cp ../org.openaudible.OpenAudible.yml .
 cp ../org.openaudible.OpenAudible.desktop .
 cp ../org.openaudible.OpenAudible.png .
 cp ../org.openaudible.OpenAudible.appdata.xml .
+cp ../bin_openaudible .
 
 ## Extract the .deb file and get version/date as json.
 mkdir -p openaudible_extracted
@@ -68,8 +69,14 @@ flatpak run org.flatpak.Builder --force-clean --disable-rofiles-fuse --repo=repo
 # Create Flatpak bundle
 flatpak build-bundle  repo OpenAudible-$VERSION.flatpak org.openaudible.OpenAudible
 
-echo "Flatpak bundle created: OpenAudible-$VERSION.flatpak"
+OUT="OpenAudible-$VERSION.flatpak"
 
-# Return to previous directory
-cd ..
+
+if [ ! -f "$OUT" ]; then
+    echo "Error: OUT file not found: $OUT"
+    exit 1
+fi
+echo "Flatpak bundle created: $OUT" 
+
+echo $OUT
 

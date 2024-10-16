@@ -21,6 +21,7 @@ cleanup:
   - '*.la'
   - '*.a'
 modules:
+
   - name: openaudible
     only-arches:
       - x86_64
@@ -34,20 +35,15 @@ modules:
         path: org.openaudible.OpenAudible.png
       - type: file
         path: org.openaudible.OpenAudible.appdata.xml
+      - type: file
+        path: bin_openaudible
     build-commands:
-      - echo "Current directory contents:"
-      - ls -la
-      - echo "openaudible directory contents:"
-      - ls -la openaudible || echo "openaudible directory not found"
-      - pwd && ls -la && echo "root:" && ls -lah /
-      - echo "app:" && ls -la /app
-      - find /run/
-      - echo "copying app"
+      - cp -a /run/build/openaudible/. /app/
+      - mkdir -p /app/bin
+      - cp bin_openaudible /app/bin/OpenAudible
+      - chmod +x /app/bin/OpenAudible
       - mkdir -p /app/share/applications
       - cp org.openaudible.OpenAudible.desktop /app/share/applications/
-      - echo "copied desktop"
-      - cp -r /run/build/openaudible/* /app/ || echo "Failed to copy openaudible contents"
-      - ln -s /app/OpenAudible/OpenAudible /app/bin/OpenAudible
       - mkdir -p /app/share/applications
       - cp org.openaudible.OpenAudible.desktop /app/share/applications/
       - mkdir -p /app/share/icons/hicolor/512x512/apps
