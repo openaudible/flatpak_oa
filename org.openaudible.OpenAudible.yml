@@ -25,11 +25,28 @@ modules:
     only-arches:
       - x86_64
     buildsystem: simple
+    sources:
+      - type: dir
+        path: openaudible
+      - type: file
+        path: org.openaudible.OpenAudible.desktop
+      - type: file
+        path: org.openaudible.OpenAudible.png
+      - type: file
+        path: org.openaudible.OpenAudible.appdata.xml
     build-commands:
-      - ar x OpenAudible.deb
-      - tar -xf data.tar.gz
-      - mv ./opt/OpenAudible -t /app
-      - mkdir -p /app/bin
+      - echo "Current directory contents:"
+      - ls -la
+      - echo "openaudible directory contents:"
+      - ls -la openaudible || echo "openaudible directory not found"
+      - pwd && ls -la && echo "root:" && ls -lah /
+      - echo "app:" && ls -la /app
+      - find /run/
+      - echo "copying app"
+      - mkdir -p /app/share/applications
+      - cp org.openaudible.OpenAudible.desktop /app/share/applications/
+      - echo "copied desktop"
+      - cp -r /run/build/openaudible/* /app/ || echo "Failed to copy openaudible contents"
       - ln -s /app/OpenAudible/OpenAudible /app/bin/OpenAudible
       - mkdir -p /app/share/applications
       - cp org.openaudible.OpenAudible.desktop /app/share/applications/
@@ -37,14 +54,3 @@ modules:
       - cp org.openaudible.OpenAudible.png /app/share/icons/hicolor/512x512/apps/
       - mkdir -p /app/share/metainfo
       - cp org.openaudible.OpenAudible.appdata.xml /app/share/metainfo/
-    sources:
-      - type: file
-        url: "https://github.com/openaudible/openaudible/releases/download/v4.4.7/OpenAudible_4.4.7_x86_64.deb"
-        sha256: 4ceac24480b10f8fc0294f4402ab98d44b3c927840205aaacd92e5b6d9a35fea
-        dest-filename: OpenAudible.deb
-      - type: file
-        path: org.openaudible.OpenAudible.desktop
-      - type: file
-        path: org.openaudible.OpenAudible.png
-      - type: file
-        path: org.openaudible.OpenAudible.appdata.xml
