@@ -1,3 +1,6 @@
 *.deb
 build_flatpak/
 build
+.env
+.flatpak-builder
+

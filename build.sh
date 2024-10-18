@@ -15,7 +15,7 @@ if [ ! -f "$DEB_FILE" ]; then
     exit 1
 fi
 
-
+GPG=
 # Create build directory
 BUILD_DIR="build"
 rm -rf "$BUILD_DIR"
@@ -23,7 +23,7 @@ mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 # Copy necessary files
-cp ../"$DEB_FILE" OpenAudible_x86_64.deb
+cp ../"$DEB_FILE" $DEB_FILE
 cp ../org.openaudible.OpenAudible.yml .
 cp ../org.openaudible.OpenAudible.desktop .
 cp ../org.openaudible.OpenAudible.png .
@@ -69,8 +69,20 @@ flatpak run org.flatpak.Builder --force-clean --disable-rofiles-fuse --repo=repo
 # Create Flatpak bundle
 flatpak build-bundle  repo OpenAudible-$VERSION.flatpak org.openaudible.OpenAudible
 
-OUT="OpenAudible-$VERSION.flatpak"
 
+ORIG="OpenAudible-$VERSION.flatpak"
+
+if [ ! -f "$ORIG" ]; then
+    echo "Error: ORIG file not found: $ORIG"
+    echo "`ls`"
+    exit 1
+fi
+
+
+OUT=$(echo "$DEB_FILE" | sed 's/\.deb$/.flatpak/')
+mv $ORIG $OUT
+
+cp -f $OUT /tmp/oa.flatpak
 
 if [ ! -f "$OUT" ]; then
     echo "Error: OUT file not found: $OUT"

@@ -2,6 +2,7 @@
 cd "$(dirname "$0")"
 cd ..
 
+oa_packaging=flatpak ./OpenAudible
 
-# run OpenAudible from command line. -ea enables "asserts" and can help find bugs..
-./jre/bin/java -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -jar openaudible*.jar "$@"
+# run OpenAudible from command line. 
+# ./jre/bin/java -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -jar openaudible*.jar "$@"
