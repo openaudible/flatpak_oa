@@ -3,4 +3,6 @@ build_flatpak/
 build
 .env
 .flatpak-builder
+.idea
+*.iml
 
