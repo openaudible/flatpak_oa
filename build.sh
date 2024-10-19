@@ -22,22 +22,27 @@ rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
-# Copy necessary files
-cp ../"$DEB_FILE" $DEB_FILE
+
+# TODO: Replace URL, Version, and SHA256.
 cp ../org.openaudible.OpenAudible.yml .
-cp ../org.openaudible.OpenAudible.desktop .
-cp ../org.openaudible.OpenAudible.png .
-cp ../org.openaudible.OpenAudible.appdata.xml .
-cp ../bin_openaudible .
+
+
+# Copy necessary files
+#cp ../"$DEB_FILE" $DEB_FILE
+#cp ../org.openaudible.OpenAudible.yml .
+#cp ../org.openaudible.OpenAudible.desktop .
+#cp ../org.openaudible.OpenAudible.png .
+#cp ../org.openaudible.OpenAudible.appdata.xml .
+#cp ../bin_openaudible .
 
 ## Extract the .deb file and get version/date as json.
-mkdir -p openaudible_extracted
-dpkg-deb -x "$DEB_FILE" openaudible_extracted
-APPDIR=./openaudible
-
-mv openaudible_extracted/opt/OpenAudible $APPDIR
-"$APPDIR"/OpenAudible --info > info.json
-rm -rf openaudible_extracted
+#mkdir -p openaudible_extracted
+#dpkg-deb -x "$DEB_FILE" openaudible_extracted
+#APPDIR=./openaudible
+#
+#mv openaudible_extracted/opt/OpenAudible $APPDIR
+#"$APPDIR"/OpenAudible --info > info.json
+#rm -rf openaudible_extracted
 
 # Use jq to extract json data. apt install jq  -y
 
@@ -88,7 +93,7 @@ if [ ! -f "$OUT" ]; then
     echo "Error: OUT file not found: $OUT"
     exit 1
 fi
-echo "Flatpak bundle created: $OUT" 
+echo "Flatpak bundle created: $OUT"
 
 echo $OUT
 

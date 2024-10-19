@@ -1,0 +1,46 @@
+id: org.openaudible.OpenAudible
+runtime: org.gnome.Platform
+runtime-version: '47'
+sdk: org.gnome.Sdk
+command: OpenAudible
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --device=dri
+  - --talk-name=org.freedesktop.Notifications
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/pkgconfig
+  - /share/aclocal
+  - /man
+  - /share/man
+  - '*.la'
+  - '*.a'
+modules:
+
+  - name: openaudible
+    only-arches:
+      - x86_64
+    buildsystem: simple
+    sources:
+      - type: file
+        url: DEB_URL
+        sha256: SHA256
+        dest-filename: OpenAudible.deb
+    build-commands:
+      - ar x OpenAudible.deb
+      - tar -xf data.tar.gz
+      - mv ./opt/OpenAudible -t /app
+      - mkdir -p /app/bin
+      - echo -e '#!/bin/bash\ncd "$(dirname "$0")/.."\n./OpenAudible "$@"' > /app/bin/OpenAudible
+      - chmod +x /app/bin/OpenAudible
+      - mkdir -p /app/share/applications
+      - cp app/metadata/OpenAudible.desktop /app/share/applications/org.openaudible.OpenAudible.desktop
+      - mkdir -p /app/share/icons/scalable/apps
+      - cp app/metadata/OpenAudible.svg /app/share/icons/hicolor/scalable/apps/org.openaudible.OpenAudible.svg
+      - mkdir -p /app/share/metainfo
+      - cp app/metadata/OpenAudible.appdata.xml /app/share/metainfo/org.openaudible.OpenAudible.appdata.xml
