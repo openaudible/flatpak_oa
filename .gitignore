@@ -5,4 +5,5 @@ build
 .flatpak-builder
 .idea
 *.iml
+openaudible.yml
 
