@@ -34,13 +34,21 @@ modules:
     build-commands:
       - ar x OpenAudible.deb
       - tar -xf data.tar.gz
-      - mv ./opt/OpenAudible -t /app
+      - find . 
+      # Now /app contains /app/OpenAudible -we want to move everything including hidden directory. 
+      - mv ./opt/OpenAudible/{.,}* /app/
+      - ls -la  ./opt/OpenAudible
+      - rmdir ./opt/OpenAudible
+
+
       - mkdir -p /app/bin
       - echo -e '#!/bin/bash\ncd "$(dirname "$0")/.."\n./OpenAudible "$@"' > /app/bin/OpenAudible
       - chmod +x /app/bin/OpenAudible
+      - find /app
       - mkdir -p /app/share/applications
-      - cp app/metadata/OpenAudible.desktop /app/share/applications/org.openaudible.OpenAudible.desktop
+      - mv /app/metadata/OpenAudible.desktop /app/share/applications/org.openaudible.OpenAudible.desktop
       - mkdir -p /app/share/icons/scalable/apps
-      - cp app/metadata/OpenAudible.svg /app/share/icons/hicolor/scalable/apps/org.openaudible.OpenAudible.svg
+      - find /app/metadata
+      - mv /app/metadata/OpenAudible.svg /app/share/icons/scalable/apps/org.openaudible.OpenAudible.svg
       - mkdir -p /app/share/metainfo
-      - cp app/metadata/OpenAudible.appdata.xml /app/share/metainfo/org.openaudible.OpenAudible.appdata.xml
+      - mv /app/metadata/metainfo.xml /app/share/metainfo/org.openaudible.OpenAudible.metainfo.xml

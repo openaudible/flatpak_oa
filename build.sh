@@ -7,13 +7,9 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-DEB_FILE=$1
+VERSION=$1
 
 ## Check if the DEB file exists
-if [ ! -f "$DEB_FILE" ]; then
-    echo "Error: DEB file not found: $DEB_FILE"
-    exit 1
-fi
 
 GPG=
 # Create build directory
@@ -23,38 +19,8 @@ mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 
-# TODO: Replace URL, Version, and SHA256.
-cp ../org.openaudible.OpenAudible.yml .
+cp ../openaudible.yml org.openaudible.OpenAudible.yml 
 
-
-# Copy necessary files
-#cp ../"$DEB_FILE" $DEB_FILE
-#cp ../org.openaudible.OpenAudible.yml .
-#cp ../org.openaudible.OpenAudible.desktop .
-#cp ../org.openaudible.OpenAudible.png .
-#cp ../org.openaudible.OpenAudible.appdata.xml .
-#cp ../bin_openaudible .
-
-## Extract the .deb file and get version/date as json.
-#mkdir -p openaudible_extracted
-#dpkg-deb -x "$DEB_FILE" openaudible_extracted
-#APPDIR=./openaudible
-#
-#mv openaudible_extracted/opt/OpenAudible $APPDIR
-#"$APPDIR"/OpenAudible --info > info.json
-#rm -rf openaudible_extracted
-
-# Use jq to extract json data. apt install jq  -y
-
-VERSION=$(cat info.json | jq -r '.appVersion' )
-RELEASE_DATE=$(cat info.json | jq -r '.release_date' )
-
-echo "Extracted $VERSION released $RELEASEDATE"
-
-
-# Update version in AppData file
-sed -i "s/VERSION/$VERSION/" org.openaudible.OpenAudible.appdata.xml
-sed -i "s/YYYY-MM-DD/$RELEASE_DATE/" org.openaudible.OpenAudible.appdata.xml
 
 # Ensure Flathub remote is added
 flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -84,16 +50,8 @@ if [ ! -f "$ORIG" ]; then
 fi
 
 
-OUT=$(echo "$DEB_FILE" | sed 's/\.deb$/.flatpak/')
-mv $ORIG $OUT
+#OUT=$(echo "$DEB_FILE" | sed 's/\.deb$/.flatpak/')
+# mv $ORIG $OUT
 
-cp -f $OUT /tmp/oa.flatpak
-
-if [ ! -f "$OUT" ]; then
-    echo "Error: OUT file not found: $OUT"
-    exit 1
-fi
-echo "Flatpak bundle created: $OUT"
-
-echo $OUT
+# cp -f $OUT /tmp/oa.flatpak
 

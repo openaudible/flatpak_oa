@@ -20,3 +20,4 @@ sed "s|DEB_URL|$DEB_URL|g; s|SHA256|$SHA256|g" template.yml > openaudible.yml
 
 # Output the result file path
 echo "Template has been updated and saved to openaudible.yml"
+./build.sh $VERSION
