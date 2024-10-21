@@ -3,11 +3,11 @@ set -e
 set -x
 
 if [ $# -ne 1 ]; then
-    echo "Usage: $0 DEB file"
+    echo "Usage: $0 output name"
     exit 1
 fi
 
-VERSION=$1
+FLATPAK_NAME=$1
 
 ## Check if the DEB file exists
 
@@ -19,7 +19,7 @@ mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 
-cp ../openaudible.yml org.openaudible.OpenAudible.yml 
+cp ../openaudible.yml org.openaudible.OpenAudible.yml
 
 
 # Ensure Flathub remote is added
@@ -38,20 +38,14 @@ flatpak install -y --user flathub org.flatpak.Builder
 flatpak run org.flatpak.Builder --force-clean --disable-rofiles-fuse --repo=repo "$BUILD_DIR" org.openaudible.OpenAudible.yml
 
 # Create Flatpak bundle
-flatpak build-bundle  repo OpenAudible-$VERSION.flatpak org.openaudible.OpenAudible
+flatpak build-bundle  repo $FLATPAK_NAME org.openaudible.OpenAudible
 
 
-ORIG="OpenAudible-$VERSION.flatpak"
 
-if [ ! -f "$ORIG" ]; then
-    echo "Error: ORIG file not found: $ORIG"
+if [ ! -f "$FLATPAK_NAME" ]; then
+    echo "Error: $FLATPAK_NAME file not found: $FLATPAK_NAME"
     echo "`ls`"
     exit 1
 fi
 
-
-#OUT=$(echo "$DEB_FILE" | sed 's/\.deb$/.flatpak/')
-# mv $ORIG $OUT
-
-# cp -f $OUT /tmp/oa.flatpak
 

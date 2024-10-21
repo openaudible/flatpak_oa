@@ -15,9 +15,14 @@ DOWNLOAD_DIR=$(echo $JSON | jq -r '.download_dir')
 # Concatenate download_dir and FILE to get full URL
 DEB_URL="${DOWNLOAD_DIR}${FILE}"
 
+
 # Replace DEB_URL and SHA256 in template.yml and save to output.yml
 sed "s|DEB_URL|$DEB_URL|g; s|SHA256|$SHA256|g" template.yml > openaudible.yml
 
+
+FLATPAK="${FILE%.deb}.flatpak"
+echo $FLATPAK
+
 # Output the result file path
 echo "Template has been updated and saved to openaudible.yml"
-./build.sh $VERSION
+./build.sh $FLATPAK
