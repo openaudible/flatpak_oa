@@ -11,6 +11,10 @@ finish-args:
   - --socket=pulseaudio
   - --device=dri
   - --talk-name=org.freedesktop.Notifications
+  - --filesystem=xdg-run/OpenAudible:create
+  - --filesystem=~/OpenAudible:create
+  - --env=OA_FLATPAK=true
+
 cleanup:
   - /include
   - /lib/pkgconfig
@@ -34,8 +38,8 @@ modules:
     build-commands:
       - ar x OpenAudible.deb
       - tar -xf data.tar.gz
-      - find . 
-      # Now /app contains /app/OpenAudible -we want to move everything including hidden directory. 
+      - find .
+      # Now /app contains /app/OpenAudible -we want to move everything including hidden directory.
       - mv ./opt/OpenAudible/{.,}* /app/
       - ls -la  ./opt/OpenAudible
       - rmdir ./opt/OpenAudible
@@ -54,4 +58,4 @@ modules:
       - mv /app/metadata/metainfo.xml /app/share/metainfo/org.openaudible.OpenAudible.metainfo.xml
       - mkdir -p /app/share/icons/hicolor/512x512/apps
       - mv /app/metadata/512x512.png /app/share/icons/hicolor/512x512/apps/org.openaudible.OpenAudible.png
-        
+
